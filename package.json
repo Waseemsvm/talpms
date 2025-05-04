@@ -1,0 +1,19 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "TALPMS backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Waseemsvm/talpms.git"
+  },
+  "author": "Waseem Akram P",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Waseemsvm/talpms/issues"
+  },
+  "homepage": "https://github.com/Waseemsvm/talpms#readme"
+}
