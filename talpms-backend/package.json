@@ -4,12 +4,18 @@
   "description": "The backend for The Akrams'",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server/index",
+    "dev": "nodemon server/index",
+    "build": "tsc -b"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.5.0",
     "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.17",
+    "nodemon": "^3.1.10"
   }
 }

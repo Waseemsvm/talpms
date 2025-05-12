@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "rootDir": "src",
+        "moduleResolution": "node",
+        "types": ["node"],
+        "outDir": "server"
+    },
+    "exclude": ["server", "node_modules"]
+}
