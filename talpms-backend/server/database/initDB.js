@@ -36,44 +36,56 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var express = require("express");
-var app = require("express")();
-require("dotenv").config();
-app.use(express.json());
-/** Database connection */
-var initDB_1 = require("./database/initDB");
-var db = initDB_1.default.getInstance();
-db.testConnection();
-var PORT = process.env.PORT;
-app.get("/", function (req, res) {
-    console.log("Triggered / Get request");
-    res.send("Hello World");
-});
-app.post("/create_student", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var conn, result;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                conn = db.getConnection()("student");
-                return [4 /*yield*/, conn
-                        .insert({
-                        id: "student01",
-                        first_name: "waseem",
-                    })
-                        .returning("id")];
-            case 1:
-                result = _a.sent();
-                res.send(result);
-                return [2 /*return*/];
+var MYSQL_HOST = process.env.MYSQL_HOST;
+var MYSQL_PORT = process.env.MYSQL_PORT;
+var MYSQL_USER = process.env.MYSQL_USER;
+var MYSQL_PASSWORD = process.env.MYSQL_PASSWORD;
+var DB_NAME = process.env.DB_NAME;
+var DB_CLIENT = process.env.DB_CLIENT;
+var knex = require("knex");
+var Database = /** @class */ (function () {
+    function Database() {
+        this.knexInstance = knex({
+            client: DB_CLIENT,
+            connection: {
+                host: MYSQL_HOST,
+                port: MYSQL_PORT,
+                user: MYSQL_USER,
+                password: MYSQL_PASSWORD,
+                database: DB_NAME,
+            },
+        });
+    }
+    Database.getInstance = function () {
+        if (!Database.instance) {
+            Database.instance = new Database();
         }
-    });
-}); });
-app.post("/delete_student", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        console.log(req);
-        return [2 /*return*/];
-    });
-}); });
-app.listen(PORT, function (err) {
-    console.log("Server started on port ", PORT);
-});
+        return Database.instance;
+    };
+    Database.prototype.getConnection = function () {
+        return this.knexInstance;
+    };
+    Database.prototype.testConnection = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.knexInstance.raw("SELECT 1")];
+                    case 1:
+                        _a.sent();
+                        console.log("Database connected");
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_1 = _a.sent();
+                        console.error("Database connection failed:", error_1);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return Database;
+}());
+exports.default = Database;

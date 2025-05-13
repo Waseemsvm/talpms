@@ -1,0 +1,2 @@
+POST http://localhost:3001/create_student HTTP/1.1
+body: {id: "student01", name: "waseem"}
