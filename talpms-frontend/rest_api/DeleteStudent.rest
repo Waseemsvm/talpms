@@ -1,2 +1,4 @@
 POST http://localhost:3001/delete_student HTTP/1.1
-body: {id: "student01"}
+Content-Type: application/json
+
+{"id": "student01"}

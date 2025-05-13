@@ -3,7 +3,8 @@
         "rootDir": "src",
         "moduleResolution": "node",
         "types": ["node"],
-        "outDir": "server"
+        "outDir": "server",
+        "sourceMap": true
     },
     "exclude": ["server", "node_modules"]
 }

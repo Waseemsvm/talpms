@@ -1,1 +1,1 @@
-{"root":["./src/index.ts","./src/database/initdb.ts"],"version":"5.7.2"}
+{"root":["./src/index.ts","./src/controller/student.ts","./src/database/initdb.ts"],"version":"5.7.2"}
