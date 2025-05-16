@@ -11,6 +11,7 @@ studentRouter.get("/", async (req, res) => {
 
 studentRouter.post("/register", async (req, res) => {
   const db = Database.getInstance().getConnection();
+  console.log(req);
   // db.insert()
 })
 
