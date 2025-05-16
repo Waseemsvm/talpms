@@ -1,8 +1,8 @@
 import { Button, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import Student from "./model/Student";
 
 export default function StudentRegisterForm() {
-
 
     const initialVal = {
         firstName: "",
@@ -15,7 +15,6 @@ export default function StudentRegisterForm() {
         grade: "",
         gender: ""
     }
-
 
     const [formDetails, setFormDetails] = useState(initialVal);
 
@@ -83,7 +82,7 @@ export default function StudentRegisterForm() {
                 Gender
             </FormLabel>
             <RadioGroup aria-labelledby="student-gender-label" onChange={e => {
-                setFormDetails({...formDetails, gender: e.target.value})
+                setFormDetails({ ...formDetails, gender: e.target.value })
             }}>
                 <FormControlLabel value="female" control={<Radio />} label="Female" />
                 <FormControlLabel value="male" control={<Radio />} label="Male" />
@@ -91,7 +90,10 @@ export default function StudentRegisterForm() {
             </RadioGroup>
         </FormControl>
         <FormControl style={{ width: "300px" }}>
-            <Button variant="contained" onClick={e => {
+            <Button variant="contained" onClick={() => {
+                //@ts-ignore
+                formDetails.id = "111"
+                Student.registerStudent(formDetails);
                 console.log(formDetails);
             }}>Submit</Button>
         </FormControl>

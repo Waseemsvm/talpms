@@ -1,8 +1,11 @@
 const express = require("express");
 const app = require("express")();
+const cors = require("cors");
 require("dotenv").config();
 const studentRouter = require("./controller/student");
+const PORT = process.env.PORT;
 
+app.use(cors({}));
 
 app.use(express.json());
 
@@ -10,8 +13,6 @@ app.use(express.json());
 import Database from "./database/initDB";
 const db = Database.getInstance();
 db.testConnection();
-
-const PORT = process.env.PORT;
 
 app.use("/student", studentRouter);
 

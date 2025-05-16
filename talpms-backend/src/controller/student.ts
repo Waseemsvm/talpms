@@ -1,6 +1,20 @@
+import Database from "../database/initDB";
+
 const studentRouter = require("express").Router();
 
-studentRouter.get("/", (req, res) => {
+studentRouter.get("/", async (req, res) => {
+  console.log("Get students");
+  const db = Database.getInstance().getConnection();
+  const students = await db.select("*").table("student");
+  res.json(students);
+});
+
+studentRouter.post("/register", async (req, res) => {
+  const db = Database.getInstance().getConnection();
+  // db.insert()
+})
+
+studentRouter.post("/", (req, res) => {
   console.log("Get students");
 });
 
@@ -15,7 +29,6 @@ studentRouter.post("/create", (req, res) => {
 studentRouter.delete("/:id", (req, res) => {
   console.log("deleting student");
 });
-
 
 // app.get("/", (req, res) => {
 //   console.log("Triggered / Get request");
