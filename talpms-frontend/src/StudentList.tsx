@@ -1,45 +1,88 @@
 import { useEffect, useRef, useState } from "react";
 import Student from "./model/Student";
-import { Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Box, IconButton, Paper, Snackbar, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography } from "@mui/material";
+import { Add } from "@mui/icons-material";
+import StudentRegDialog from "./StudentRegDialog";
 
 export default function StudentList() {
 
     let hasFetched = useRef(false);
-    const [students, setStudents] = useState([]);
+    const [students, setStudents] = useState([] as Student[]);
+    const [dialogOpen, setDialogOpen] = useState(false);
+    // const [isStudRegSnackOpen, setIsStudRegSnackOpen] = useState(false);
+
+    // const handleStudRegSnackbar = () => {
+    //     setIsStudRegSnackOpen(false);
+    // }
 
     useEffect(() => {
         Student.fetchAllStudents().then(res => {
             if (hasFetched.current) return;
             hasFetched.current = true;
-            console.log(res);
-            setStudents(res.data);
+            setStudents(res.data.map((r: any) => new Student(r)));
         })
     }, []);
 
+    const handleDialogClose = () => {
+        setDialogOpen(false);
+        // setIsStudRegSnackOpen(true)
+    }
 
-    return <TableContainer component={Paper}>
-        <Table>
-            <TableHead>
-                <TableCell>
-                    Student ID
-                </TableCell>
-                <TableCell>
-                    Student Name
-                </TableCell>
-                <TableCell>
-                    Active
-                </TableCell>
-            </TableHead>
-            <TableBody>
-                {students.map(s => {
-                    return <TableRow key={s.id}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                        <TableCell>{s.id}</TableCell>
-                        <TableCell>{`${s.first_name} ${s.last_name}`}</TableCell>
-                        <TableCell><Switch></Switch></TableCell>
+
+
+    return <Box>
+        <Toolbar variant="dense" >
+            <Typography variant="h5">Students</Typography>
+            <div style={{ flexGrow: 1 }}></div>
+            <IconButton type="button" onClick={e => {
+                setDialogOpen(true);
+            }}>
+                <Add />
+            </IconButton>
+        </Toolbar>
+        <StudentRegDialog open={dialogOpen} onClose={handleDialogClose} />
+        <TableContainer>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>
+                            Student ID
+                        </TableCell>
+                        <TableCell>
+                            Student Name
+                        </TableCell>
+                        <TableCell>
+                            Grade
+                        </TableCell>
+                        <TableCell>
+                            Active
+                        </TableCell>
                     </TableRow>
-                })}
-            </TableBody>
-        </Table>
-    </TableContainer>
+                </TableHead>
+                <TableBody>
+                    {students.map((student, studentIdx) => {
+                        return <TableRow key={student.id}>
+                            <TableCell>
+                                {student.id}
+                            </TableCell>
+                            <TableCell>
+                                {`${student.first_name} ${student.last_name}`}
+                            </TableCell>
+                            <TableCell>
+                                {student.grade}
+                            </TableCell>
+                            <TableCell>
+                                <Switch checked={!!student.is_active} onChange={e => {
+                                    student.is_active = e.target.checked;
+                                    setStudents([...students]);
+                                    e.target.checked ? Student.activate(student.id) : Student.deactivate(student.id);
+                                }}></Switch>
+                            </TableCell>
+                        </TableRow>
+                    })}
+                </TableBody>
+            </Table>
+        </TableContainer>
+        {/* <Snackbar open={isStudRegSnackOpen} autoHideDuration={2000} onClose={handleStudRegSnackbar}></Snackbar> */}
+    </Box>
 }

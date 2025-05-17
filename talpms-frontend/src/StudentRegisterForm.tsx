@@ -1,37 +1,21 @@
-import { Button, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField, Typography } from "@mui/material";
+import { FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import Student from "./model/Student";
 
-export default function StudentRegisterForm() {
-
-    const initialVal = {
-        firstName: "",
-        lastName: "",
-        mobile: "",
-        school: "",
-        guardian: "",
-        email: "",
-        address: "",
-        grade: "",
-        gender: ""
-    }
-
-    const [formDetails, setFormDetails] = useState(initialVal);
+export default function StudentRegisterForm({ formDetails, onFormStateChange: setFormDetails }: { formDetails: any, onFormStateChange: Function }) {
 
     return <div style={{
         display: "flex",
         flexDirection: "column"
-
     }}>
         <Typography variant="h5"> Student Registration Form</Typography>
         <FormControl style={{ width: "300px" }}>
-            <TextField id="student-first-name" label="First Name" variant="standard" placeholder="First Name" onChange={e => {
-                setFormDetails({ ...formDetails, firstName: e.target.value })
+            <TextField id="student-first-name" label="First Name" variant="standard" placeholder="First Name" required onChange={e => {
+                setFormDetails({ ...formDetails, first_name: e.target.value })
             }} />
         </FormControl>
         <FormControl style={{ width: "300px" }}>
             <TextField id="student-last-name" label="Last Name" variant="standard" placeholder="Last Name" onChange={e => {
-                setFormDetails({ ...formDetails, lastName: e.target.value })
+                setFormDetails({ ...formDetails, last_name: e.target.value })
             }} />
         </FormControl>
         <FormControl style={{ width: "300px" }}>
@@ -90,12 +74,12 @@ export default function StudentRegisterForm() {
             </RadioGroup>
         </FormControl>
         <FormControl style={{ width: "300px" }}>
-            <Button variant="contained" onClick={() => {
+            {/* <Button variant="contained" onClick={() => {
                 //@ts-ignore
                 formDetails.id = "111"
                 Student.registerStudent(formDetails);
                 console.log(formDetails);
-            }}>Submit</Button>
+            }}>Submit</Button> */}
         </FormControl>
     </div>
 }

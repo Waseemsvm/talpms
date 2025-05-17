@@ -1,4 +1,5 @@
 import Database from "../database/initDB";
+import GUIDGenerator from "../utility/GUIDGenerator";
 
 const studentRouter = require("express").Router();
 
@@ -10,10 +11,18 @@ studentRouter.get("/", async (req, res) => {
 });
 
 studentRouter.post("/register", async (req, res) => {
-  const db = Database.getInstance().getConnection();
-  console.log(req);
-  // db.insert()
-})
+  try {
+    const db = Database.getInstance().getConnection();
+    const id = `STU-${new GUIDGenerator()
+      .generate()
+      .slice(0, 8)}`.toUpperCase();
+    const student = req.body;
+    const r = await db.insert({ ...student, id: id }).table("student");
+    res.send(200);
+  } catch (ex) {
+    res.send(500).end();
+  }
+});
 
 studentRouter.post("/", (req, res) => {
   console.log("Get students");
@@ -31,26 +40,28 @@ studentRouter.delete("/:id", (req, res) => {
   console.log("deleting student");
 });
 
-// app.get("/", (req, res) => {
-//   console.log("Triggered / Get request");
-//   res.send("Hello World");
-// });
+studentRouter.post("/activate", async (req, res) => {
+  try {
+    const db = Database.getInstance().getConnection();
+    await db("student").where("id", req.body.id).update({
+      is_active: 1,
+    });
+    res.send(200);
+  } catch (ex) {
+    res.send(500).end();
+  }
+});
 
-// app.post("/create_student", async (req, res) => {
-//   const conn = db.getConnection()("student");
-//   const result = await conn
-//     .insert({
-//       id: "student01",
-//       first_name: "waseem",
-//     })
-//     .returning("id");
-//   res.send(result);
-// });
-
-// app.post("/delete_student", async (req, res) => {
-//   console.log(req)
-//   // const conn = db.getConnection()("student");
-//   // conn.where("id", )
-// });
+studentRouter.post("/deactivate", async (req, res) => {
+  try {
+    const db = Database.getInstance().getConnection();
+    await db("student").where("id", req.body.id).update({
+      is_active: 0,
+    });
+    res.send(200);
+  } catch (ex) {
+    res.send(500).end();
+  }
+});
 
 module.exports = studentRouter;
