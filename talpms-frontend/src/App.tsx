@@ -5,8 +5,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 
 export default function App() {
-  // return <StudentRegisterForm />
-  // return <StudentList />
   const appBarHeight = 64;
   return <Box sx={{ display: "flex", height: "100vh", flexDirection: "column" }}>
     <Box sx={{ display: "flex" }}>
@@ -19,7 +17,6 @@ export default function App() {
       </AppBar>
     </Box>
     <Box component="main" flexGrow="1" style={{ marginTop: appBarHeight, overflow: "auto", height: "calc(100vh -64)" }}>
-      {/* <StudentRegisterForm /> */}
       <StudentList />
     </Box>
   </Box>

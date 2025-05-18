@@ -55,6 +55,10 @@ export default class Student {
     this.is_active = is_active;
   }
 
+  public static async search(value: string) {
+    return await axios.get(`${sURL}/search?value=${value}`);
+  }
+
   public static async activate(id: string) {
     return await axios.post(`${sURL}/activate`, { id: id });
   }

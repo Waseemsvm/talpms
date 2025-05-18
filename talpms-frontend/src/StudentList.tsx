@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import Student from "./model/Student";
-import { Box, IconButton, Paper, Snackbar, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography } from "@mui/material";
+import { Box, IconButton, Input, Paper, Snackbar, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import StudentRegDialog from "./StudentRegDialog";
 
@@ -28,12 +28,20 @@ export default function StudentList() {
         // setIsStudRegSnackOpen(true)
     }
 
-
+    let debounceStudentSearch: number;
+    const handleStudentSearch = (e: any) => {
+        clearTimeout(debounceStudentSearch);
+        debounceStudentSearch = setTimeout(async () => {
+            const res: any = await Student.search(e.target.value);
+            setStudents(res.data.map((r: any) => new Student(r)));
+        }, 250);
+    }
 
     return <Box>
         <Toolbar variant="dense" >
             <Typography variant="h5">Students</Typography>
             <div style={{ flexGrow: 1 }}></div>
+            <Input style={{ border: "0.1px solid black", borderRadius: "5px" }} placeholder="Search Students" onChange={handleStudentSearch} />
             <IconButton type="button" onClick={e => {
                 setDialogOpen(true);
             }}>

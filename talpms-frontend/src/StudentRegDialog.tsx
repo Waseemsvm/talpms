@@ -22,12 +22,12 @@ export default function StudentRegDialog({ open, onClose }: { open: boolean, onC
     const handleRegisterStudent = async () => {
         setBackdropOpen(true);
         try {
-            // await Student.registerStudent(formDetails);
-            await new Promise((res, rej) => {
-                setTimeout(() => {
-                    rej(null)
-                }, 10000);
-            })
+            await Student.registerStudent(formDetails);
+            // await new Promise((res, rej) => {
+            //     setTimeout(() => {
+            //         rej(null)
+            //     }, 10000);
+            // })
             onClose?.();
 
         } catch (ex) {
@@ -38,15 +38,15 @@ export default function StudentRegDialog({ open, onClose }: { open: boolean, onC
     }
 
     return <Dialog open={open}>
-        <DialogTitle>Register Student</DialogTitle>
-        <DialogContent style={{ textAlign: "center", display: "flex", justifyContent: "center " }}>
+        <DialogTitle align='center'>Register Student</DialogTitle>
+        <DialogContent style={{ display: "flex", justifyContent: "center " }}>
             <StudentRegisterForm onFormStateChange={setFormDetails} formDetails={formDetails} ></StudentRegisterForm>
         </DialogContent>
         <DialogActions>
             <Button onClick={e => {
                 onClose?.();
             }}>Cancel</Button>
-            <Button type='submit' onClick={e => {
+            <Button variant='contained' type='submit' onClick={e => {
                 handleRegisterStudent()
             }}>Register</Button>
         </DialogActions>

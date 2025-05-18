@@ -7,7 +7,7 @@ export default function StudentRegisterForm({ formDetails, onFormStateChange: se
         display: "flex",
         flexDirection: "column"
     }}>
-        <Typography variant="h5"> Student Registration Form</Typography>
+        {/* <Typography variant="h5"> Student Registration Form</Typography> */}
         <FormControl style={{ width: "300px" }}>
             <TextField id="student-first-name" label="First Name" variant="standard" placeholder="First Name" required onChange={e => {
                 setFormDetails({ ...formDetails, first_name: e.target.value })

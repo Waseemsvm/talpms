@@ -21,7 +21,7 @@ export default class Database {
         port: MYSQL_PORT,
         user: MYSQL_USER,
         password: MYSQL_PASSWORD,
-        database: DB_NAME,
+        database: DB_NAME
       },
     });
   }

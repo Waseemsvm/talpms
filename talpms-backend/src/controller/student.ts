@@ -28,7 +28,31 @@ studentRouter.post("/", (req, res) => {
   console.log("Get students");
 });
 
-studentRouter.get("/:id", (req, res) => {
+studentRouter.get("/search", async (req, res) => {
+  const db = Database.getInstance().getConnection();
+  const value = req.query.value;
+
+  try {
+    let students;
+    if (value) {
+      students = await db("student")
+        .select()
+        .where("first_name", "LIKE", `%${value}%`)
+        .orWhere("last_name", "LIKE", `%${value}%`);
+    } else {
+      students = await db("student").select("*");
+    }
+
+    res.json(students).end();
+  } catch (ex) {
+    console.log(ex);
+    res.send(500);
+  } finally {
+    res.end();
+  }
+});
+
+studentRouter.get("/search/:id", (req, res) => {
   console.log("Getting single student");
 });
 
