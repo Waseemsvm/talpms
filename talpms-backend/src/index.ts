@@ -23,6 +23,7 @@ const requestLogger = (request, response, next) => {
 }
 
 app.use(requestLogger);
+// app.use(express.urlencoded({ extended: true }))
 
 app.use("/student", studentRouter);
 

@@ -4,28 +4,20 @@ import GUIDGenerator from "../utility/GUIDGenerator";
 const studentRouter = require("express").Router();
 
 studentRouter.get("/", async (req, res) => {
-  console.log("Get students");
+  const id = req.query.id;
   const db = Database.getInstance().getConnection();
-  const students = await db.select("*").table("student");
-  res.json(students);
-});
-
-studentRouter.post("/register", async (req, res) => {
-  try {
-    const db = Database.getInstance().getConnection();
-    const id = `STU-${new GUIDGenerator()
-      .generate()
-      .slice(0, 8)}`.toUpperCase();
-    const student = req.body;
-    const r = await db.insert({ ...student, id: id }).table("student");
-    res.send(200);
-  } catch (ex) {
-    res.send(500).end();
+  let students;
+  if (id) {
+    console.log(`Fetching Student with id ${id}`);
+    // students = await db("student").select("*").where("id", id);
+    [students] = await db.raw(`select * from student where id = '${id}'`)
+  } else {
+    console.log(`Fetching Students`);
+    // students = await db.select("*").table("student");
+    [students] = await db.raw(`select * from student`);
   }
-});
 
-studentRouter.post("/", (req, res) => {
-  console.log("Get students");
+  res.json(students);
 });
 
 studentRouter.get("/search", async (req, res) => {
@@ -35,12 +27,9 @@ studentRouter.get("/search", async (req, res) => {
   try {
     let students;
     if (value) {
-      students = await db("student")
-        .select()
-        .where("first_name", "LIKE", `%${value}%`)
-        .orWhere("last_name", "LIKE", `%${value}%`);
+      [students] = await db.raw(`select * from student where first_name like '%${value}%' or last_name like '%${value}%'`)
     } else {
-      students = await db("student").select("*");
+      [students]  = await db.raw(`select * from student`);
     }
 
     res.json(students).end();
@@ -52,16 +41,26 @@ studentRouter.get("/search", async (req, res) => {
   }
 });
 
-studentRouter.get("/search/:id", (req, res) => {
-  console.log("Getting single student");
+studentRouter.post("/register", async (req, res) => {
+  try {
+    const db = Database.getInstance().getConnection();
+    const id = `STU-${new GUIDGenerator()
+      .generate()
+      .slice(0, 8)}`.toUpperCase();
+    const student = req.body;
+    const r = await db.insert({ ...student, id: id }).table("student");
+    res.json({ id: id });
+  } catch (ex) {
+    res.send(500).end();
+  }
 });
 
-studentRouter.post("/create", (req, res) => {
-  console.log("Creating student");
-});
-
-studentRouter.delete("/:id", (req, res) => {
-  console.log("deleting student");
+studentRouter.delete("/", async (req, res) => {
+  console.log(req.query.id);
+  const db = Database.getInstance().getConnection();
+  const r = await db("student").where("id", req.query.id).delete();
+  if(!r) res.sendStatus(404);
+  res.sendStatus(200);
 });
 
 studentRouter.post("/activate", async (req, res) => {

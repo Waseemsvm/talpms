@@ -1,6 +1,6 @@
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Student from "./model/Student";
-import { Box, IconButton, Input, Paper, Snackbar, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography } from "@mui/material";
+import { Box, IconButton, Input, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import StudentRegDialog from "./StudentRegDialog";
 
@@ -68,7 +68,7 @@ export default function StudentList() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {students.map((student, studentIdx) => {
+                    {students.map((student) => {
                         return <TableRow key={student.id}>
                             <TableCell>
                                 {student.id}
