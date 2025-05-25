@@ -16,6 +16,9 @@ export default class Student {
   public grade: string;
   public gender: Gender;
   public is_active?: Boolean;
+  public get name() {
+    return `${this.first_name ?? ""} ${this.last_name ?? ""}`.trim();
+  }
 
   constructor({
     id,

@@ -1,3 +1,3 @@
-export default function AdminDashBoard(){
-    return <>Admin Dashboard</>
+export default function AdminDashBoard() {
+    return <div>Admin Dashboard</div>
 }
