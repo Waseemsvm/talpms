@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router"
-import { useAuth } from "./AuthContext";
+import { useAuth } from "../components/Auth/AuthContext";
+import { Card } from "@mui/material";
 
 export default function LoginPage() {
     const navigate = useNavigate();
@@ -15,5 +16,6 @@ export default function LoginPage() {
         <button onClick={e => {
             handleLogin();
         }}>Login</button>
+        <Card></Card>
     </div>
 }

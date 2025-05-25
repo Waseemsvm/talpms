@@ -5,7 +5,7 @@ import AdminDashBoard from "./pages/AdminDashBoard";
 import StudentList from "./pages/StudentList";
 import AuthProvider from "./components/Auth/AuthContext";
 import PrivateRoute from "./components/Auth/PrivateRoute";
-import LoginPage from "./components/Auth/LoginPage";
+import LoginPage from "./pages/LoginPage";
 
 export default function AdminApp() {
     const appDrawerWidth = 240;
