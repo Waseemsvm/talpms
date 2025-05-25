@@ -1,7 +1,7 @@
 import { Avatar, ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { AccountCircle, Settings, LogoutOutlined } from "@mui/icons-material";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./Auth/AuthContext";
 
 export default function AdminAppBarAvatar() {
     const [anchorEl, setAnchorEl] = useState(null);

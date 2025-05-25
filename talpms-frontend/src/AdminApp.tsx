@@ -3,9 +3,9 @@ import { Routes, Route, BrowserRouter } from "react-router";
 import AdminAppLayout from "./layouts/AdminAppLayout";
 import AdminDashBoard from "./pages/AdminDashBoard";
 import StudentList from "./pages/StudentList";
-import AuthProvider from "./components/AuthContext";
-import LoginPage from "./components/LoginPAge";
-import PrivateRoute from "./components/PrivateRoute";
+import AuthProvider from "./components/Auth/AuthContext";
+import PrivateRoute from "./components/Auth/PrivateRoute";
+import LoginPage from "./components/Auth/LoginPage";
 
 export default function AdminApp() {
     const appDrawerWidth = 240;
