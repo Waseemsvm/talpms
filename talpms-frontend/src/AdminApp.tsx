@@ -6,6 +6,7 @@ import StudentList from "./pages/StudentList";
 import AuthProvider from "./components/Auth/AuthContext";
 import PrivateRoute from "./components/Auth/PrivateRoute";
 import AuthForm from "./pages/AuthForm";
+import NotFound from "./pages/NotFound";
 
 export default function AdminApp() {
     const appDrawerWidth = 240;
@@ -16,11 +17,11 @@ export default function AdminApp() {
                 <Route path="/register" element={<AuthForm />}></Route>
                 <Route element={<PrivateRoute />} >
                     <Route path="/" element={<AdminAppLayout appDrawerWidth={appDrawerWidth} />}>
-                        <Route index element={<AdminDashBoard />}></Route>
+                        <Route path="/" element={<AdminDashBoard />}></Route>
                         <Route path="students" element={<StudentList />}></Route>
                     </Route>
                 </Route>
-                {/* <Route path="*" element={<Navigate to="/" />} /> */}
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </AuthProvider>
     </BrowserRouter>
